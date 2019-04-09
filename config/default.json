@@ -1,0 +1,36 @@
+{
+   "logger": {
+       "file": {
+            "level": "debug",
+            "relativePath": "./logs/app.log"
+        },
+       "console": {
+            "level": "debug",
+            "handleExceptions": true,
+            "json": false,
+            "colorize": true
+        },
+        "logstash": {
+            "level": "debug",
+            "port": 5000,
+            "node_name": "web",
+            "host": "logstash"
+        }
+   },
+   "mysql": {
+        "host" : "uvdb",
+        "user" : "uvis_prod",
+        "password" : "uvis_test123",
+        "database" : "uvis_prod",
+        "dateStrings": true,
+        "timezone": "Z"
+    },
+    "db_user_password_file": "/run/secrets/db_user_password_file",
+    "pubsub": {
+        "defaultExchange": "uveye-general"
+    },
+    "mongo": {
+        "mongo_user_password_file": "/run/secrets/mongo_root",
+        "mongo_node_name": "mongo"
+    }       
+}

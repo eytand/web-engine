@@ -1,0 +1,10 @@
+{    
+    "key1": "val1",
+    "key2": "val2",
+    "pubsub": {
+        "url": "amqp://rabbitmq:rabbitmq@localhost:5672"
+    },
+    "mongo": {
+        "url": "mongodb://localhost:27017/test"
+    }
+}

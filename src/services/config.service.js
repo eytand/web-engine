@@ -1,0 +1,35 @@
+import config from 'config'
+import objectPath from 'object-path'
+import path from 'path'
+
+const PACKAGE = 'uveye-web-engine/package.json'
+    
+export default class ConfigService {
+
+	constructor(){
+		let moduleConfPath  = process.cwd()
+
+		if(module.id.includes('node_modules')){
+			moduleConfPath = path.dirname(require.resolve(PACKAGE))
+		}
+
+		const configDir = path.join(moduleConfPath, 'config')
+		const baseConfig = config.util.loadFileConfigs(configDir)
+		config.util.setModuleDefaults('uveye-web-engine', baseConfig)
+	}
+
+	/**
+     * Get config value by key name
+     * @param {*} key 
+     */
+	get(key) {
+		if(!module.id.includes('node_modules')) {
+			return config.get(`uveye-web-engine.${key}`)
+		}
+
+		let clonedConf = config.util.toObject()
+		let moduleCloned = config.util.cloneDeep(config.get('uveye-web-engine'))
+		let _config = config.util.makeImmutable(config.util.extendDeep(moduleCloned, clonedConf))
+		return objectPath.get(_config, key)
+	}
+}

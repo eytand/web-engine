@@ -1,0 +1,13 @@
+{
+    "logger": {
+        "file": {
+             "level": "error"
+         },
+        "console": {
+             "level": "error"
+         },
+         "logstash": {
+             "level": "error"
+         }
+    }       
+ }
