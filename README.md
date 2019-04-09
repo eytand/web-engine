@@ -1,12 +1,13 @@
-## UVEye web engine app
+## node-web-engine app
 TODO: add build badges here
 
-UVEye web engine is an onopinionated Dependency Injection framework which serves as a core base to all UVEye's services
-Cross-cutting services (e.g. logger, mongodb, redis, kafka etc.) can be incrementaly contributed to this framework and then can inherently be used by all services using the framework. 
+Node web engine is an unopinionated Dependency Injection framework which serves as a core base to all microservices
+cross-cutting services (e.g. logger, config, mongodb, redis, kafka etc.) 
+The web-engine requires upload to an NPM repository (or mirror), so that it'll be used as a base module to each microservice
 
 ## Requirements
 
-* Node 8
+* Node 8+
 * esm - The framework is coded ES6 module style, be sure to use `node -r esm <your-service>` when running. esm can be installed globally
 
 ```bash
@@ -17,13 +18,13 @@ npm i esm -g
 
 First, install the module:
 ```bash
-npm i uveye-web-engine
+npm i web-engine
 ```
 
 initialize the service:
 
 ```nodejs
-import {initServer} from 'uveye-web-engine'
+import {initServer} from 'web-engine'
 
 var {app, container, router} = initServer()
 
@@ -36,18 +37,10 @@ app.listen(3000, () => {
 Now add your stuff here...
 
 
-Externalize the container for further DI, and router
-
-```nodejs
-export function getContainer () {
-    return container
-}
-```
-
 ## Adding your own services and routes:
 
 Your services and routes are automatically scanned under `/src/routes` and `/src/services/` when initServer is being called.
-see users.js and usersServices.js exmples 
+see users.js and usersServices.js examples 
 
 ## Other injected services and repositories
 
@@ -97,16 +90,16 @@ Logstash can also be overriden with environment variables:
   ```
   export default class HealthcheckService {
       
-      check(){
+      async check(){
 
       }
   }
   ```
 
-  Parent Service calls to the child service during healtcheck interval(localhost:3000/healthcheck), than return true/flase(via routing file) based on child logic
+The parent service calls the child service during each healtcheck interval(localhost:3000/healthcheck), then returns true/false (via routing file) based on the child's healthcheck logic
   
 
-  check functrion Response has to be like the following format  
+  check function Response has bare the following format: 
 
   ``` {"status":"success"}```
   
@@ -117,12 +110,12 @@ Logstash can also be overriden with environment variables:
 
   * healthcheck docker installation
     
-    Each microservice docer file has include the following command:
+    Each microservice docer file needs to include the following command:
 
 
     ``` HEALTHCHECK --interval=30s --timeout=5s CMD curl --fail http://localhost:3000/healthcheck || exit 1 ```
 
-* The helthcheck docker service expeted to get 200 or 500 as http response 
+* The helthcheck docker service is expected to get 200 or 500 http status response 
 
 
 **Please note*** - All injections within the scanned folders (`/src/services`, `/src/repositories`, `/src/routes`) can be used implicitely - no need to get the instance from the container
@@ -149,12 +142,7 @@ this.config.get('someKey')
 this.config.get('logger.someKey')
 ```
 
-## Docker support
-TBD
 
 ## Dependencies
 
 * Koa2 - The returned app is a standard koa application, which can be used with middlewares as usual (see `https://www.npmjs.com/package/koa2`)
-* Awilix - the dependency Injection is deployed with Awilix standard application. Use the returned container to resolve (or to inject) functions and values   (see `https://github.com/jeffijoe/awilix`)
-* node-conf - the configuration is based on the "conf" npm package. Please note, values defaulted at the framework level cannot be overidden with default values in your app! (see `https://github.com/lorenwest/node-config`)
-* Bunyan logging
