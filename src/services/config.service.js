@@ -2,7 +2,7 @@ import config from 'config'
 import objectPath from 'object-path'
 import path from 'path'
 
-const PACKAGE = 'uveye-web-engine/package.json'
+const PACKAGE = 'web-engine/package.json'
     
 export default class ConfigService {
 
@@ -15,7 +15,7 @@ export default class ConfigService {
 
 		const configDir = path.join(moduleConfPath, 'config')
 		const baseConfig = config.util.loadFileConfigs(configDir)
-		config.util.setModuleDefaults('uveye-web-engine', baseConfig)
+		config.util.setModuleDefaults('web-engine', baseConfig)
 	}
 
 	/**
@@ -24,11 +24,11 @@ export default class ConfigService {
      */
 	get(key) {
 		if(!module.id.includes('node_modules')) {
-			return config.get(`uveye-web-engine.${key}`)
+			return config.get(`web-engine.${key}`)
 		}
 
 		let clonedConf = config.util.toObject()
-		let moduleCloned = config.util.cloneDeep(config.get('uveye-web-engine'))
+		let moduleCloned = config.util.cloneDeep(config.get('web-engine'))
 		let _config = config.util.makeImmutable(config.util.extendDeep(moduleCloned, clonedConf))
 		return objectPath.get(_config, key)
 	}
