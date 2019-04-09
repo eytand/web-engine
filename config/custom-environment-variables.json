@@ -1,9 +1,0 @@
-{
-   "mysql": {
-        "host" : "DB_HOST",
-        "user" : "DB_USER",
-        "password": "DB_PASSWD",
-        "database" : "DB_NAME"
-    },
-    "db_user_password_file": "DB_PASSWD_FILE"
-}
