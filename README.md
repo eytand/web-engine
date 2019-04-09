@@ -2,7 +2,7 @@
 TODO: add build badges here
 
 Node web engine is an unopinionated Dependency Injection framework which serves as a core base to all microservices
-cross-cutting services (e.g. logger, config, mongodb, redis, kafka etc.) 
+cross-cutting services (e.g. logger, config, mongodb, redis, kafka etc.) as well as a DI.
 The web-engine requires upload to an NPM repository (or mirror), so that it'll be used as a base module to each microservice
 
 ## Requirements
