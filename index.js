@@ -29,7 +29,7 @@ try {
 	}
 }
 /**
- * this function publishes the uveye server.
+ * this function publishes the server.
  * usage:
  * 
     var server = initServer()
